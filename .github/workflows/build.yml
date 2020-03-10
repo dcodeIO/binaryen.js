@@ -105,7 +105,7 @@ jobs:
     #   run: |
     #     node ./bin/wasm-opt --help
     - name: "Push changes to GitHub"
-      if: github.event_name != 'pull_request' && matrix.emsdk == 'latest-fastcomp'
+    #   if: github.event_name != 'pull_request' && matrix.emsdk == 'latest-fastcomp'
       run: |
         git add ./binaryen ./index.js ./wasm.js ./bin/wasm-opt
         npm version $VERSION --no-git-tag-version --force
@@ -118,9 +118,9 @@ jobs:
           git commit -m "Nightly v$VERSION [ci skip]"
         fi
         git push -u origin upstream
-        echo "Creating tag v$VERSION ..."
-        git tag "v$VERSION"
-        git push -u origin "v$VERSION"
+      # echo "Creating tag v$VERSION ..."
+      # git tag "v$VERSION"
+      # git push -u origin "v$VERSION"
     # - name: "Publish to npm"
     #   if: github.event_name != 'pull_request' && matrix.emsdk == 'latest-fastcomp'
     #   env:
