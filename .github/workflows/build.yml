@@ -74,12 +74,12 @@ jobs:
         cd ./binaryen/build
         source $HOME/emsdk/emsdk_env.sh
         emcc --version
-        sed -i 's/target_link_libraries(binaryen_wasm optimized "--closure 1")//g' ../CMakeLists.txt
-        sed -i 's/add_nondebug_compile_flag("-s WASM_OBJECT_FILES=0")//g' ../CMakeLists.txt
-        sed -i 's/target_link_libraries(binaryen_wasm optimized "--llvm-lto 1")//g' ../CMakeLists.txt
+        sed -i 's/"-s WASM=0"/"-s WASM=2"/g' ../CMakeLists.txt
+        sed -i 's/add_link_flag("-s SINGLE_FILE")//g' ../CMakeLists.txt
+        sed -i 's/"--closure 1"/"--closure 0"/g' ../CMakeLists.txt
         emcmake cmake .. -DCMAKE_BUILD_TYPE=Release
         emmake make -j2 binaryen_js
-        cp ./bin/binaryen_js.js ../../index.js
+        cp ./bin/binaryen_js.* ../../
         cd ../..
     # - name: "Test binaryen.js"
     #   run: |
@@ -110,7 +110,7 @@ jobs:
     - name: "Push changes to GitHub"
     #   if: github.event_name != 'pull_request' && matrix.emsdk == 'latest-fastcomp'
       run: |
-        git add ./binaryen ./index.js ./wasm.js ./bin/wasm-opt
+        git add ./binaryen ./binaryen_js.* ./index.js ./wasm.js ./bin/wasm-opt
         npm version $VERSION --no-git-tag-version --force
         if [ $RELEASE ]; then
           echo "Committing release ("$VERSION") ..."
