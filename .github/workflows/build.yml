@@ -75,7 +75,7 @@ jobs:
         source $HOME/emsdk/emsdk_env.sh
         emcc --version
         sed -i 's/debug "--profiling"/optimized "--profiling"/g' ../CMakeLists.txt
-        emcmake cmake .. -DCMAKE_BUILD_TYPE=Release
+        emcmake cmake .. -DCMAKE_BUILD_TYPE=Release -DENABLE_WERROR=0
         emmake make -j2 binaryen_js
         cp ./bin/binaryen_js.js ../../index.js
         cd ../..
