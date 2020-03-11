@@ -77,7 +77,8 @@ jobs:
         sed -i 's/"-s WASM=0"/"-s WASM=2"/g' ../CMakeLists.txt
         sed -i 's/add_link_flag("-s SINGLE_FILE")//g' ../CMakeLists.txt
         sed -i 's/"--closure 1"/"--closure 0"/g' ../CMakeLists.txt
-        emcmake cmake .. -DCMAKE_BUILD_TYPE=Release
+        sed -i 's/debug "--profiling"/optimized "--profiling-funcs"/g' ../CMakeLists.txt
+        emcmake cmake .. -DCMAKE_BUILD_TYPE=Release -DENABLE_WERROR=0
         emmake make -j2 binaryen_js
         cp ./bin/binaryen_js.* ../../
         cd ../..
