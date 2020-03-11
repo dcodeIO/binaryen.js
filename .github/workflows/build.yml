@@ -79,9 +79,9 @@ jobs:
         emmake make -j2 binaryen_js
         cp ./bin/binaryen_js.js ../../index.js
         cd ../..
-    # - name: "Test binaryen.js"
-    #   run: |
-    #     node ./tests/sanity
+    - name: "Test binaryen.js"
+      run: |
+        node ./tests/sanity
     - name: "Build binaryen.wasm"
       run: |
         cd ./binaryen/build
@@ -91,9 +91,9 @@ jobs:
         emmake make -j2 binaryen_wasm
         cp ./bin/binaryen_wasm.js ../../wasm.js
         cd ../..
-    # - name: "Test binaryen.wasm"
-    #   run: |
-    #     node ./tests/sanity --wasm
+    - name: "Test binaryen.wasm"
+      run: |
+        node ./tests/sanity --wasm
     - name: "Build wasm-opt"
       run: |
         cd ./binaryen/build
@@ -102,9 +102,9 @@ jobs:
         emmake make -j2 wasm-opt
         echo '#!/usr/bin/env node' | cat - ./bin/wasm-opt.js > ../../bin/wasm-opt
         cd ../..
-    # - name: "Test wasm-opt"
-    #   run: |
-    #     node ./bin/wasm-opt --help
+    - name: "Test wasm-opt"
+      run: |
+        node ./bin/wasm-opt --help
     - name: "Push changes to GitHub"
     #   if: github.event_name != 'pull_request' && matrix.emsdk == 'latest-fastcomp'
       run: |
