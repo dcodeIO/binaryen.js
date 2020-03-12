@@ -13,7 +13,7 @@ jobs:
     if: github.event_name == 'schedule' || !contains(github.event.head_commit.message, '[ci skip]')
     strategy:
       matrix:
-        emsdk: [ "latest" ]
+        emsdk: [ "tot" ]
       fail-fast: false
     steps:
     - name: "Set up Emsdk"
@@ -70,7 +70,6 @@ jobs:
         fi
     - name: "Build binaryen.js"
       run: |
-        cp ./js-optimizer.js $HOME/emsdk/upstream/emscripten/tools/js-optimizer.js
         mkdir ./binaryen/build
         cd ./binaryen/build
         source $HOME/emsdk/emsdk_env.sh
